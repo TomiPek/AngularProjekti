@@ -1,0 +1,38 @@
+﻿<h1>Accounts</h1>
+<p>All accounts from secure (admin only) api end point:</p>
+<a routerLink="add" class="btn btn-sm btn-success mb-2">Create Account</a>
+
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let account"> {{account.title}} {{account.firstName}} {{account.lastName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+        <td mat-cell *matCellDef="let account"> {{account.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+        <td mat-cell *matCellDef="let account"> {{account.role}} </td>
+    </ng-container>
+
+    <ng-container id="kolmonen" matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td id="napit" mat-cell *matCellDef="let account">
+            <a routerLink="edit/{{account.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+            <button (click)="deleteAccount(account.id)" class="btn btn-sm btn-danger btn-delete-account"
+                [disabled]="account.isDeleting">
+                <span *ngIf="account.isDeleting" class="spinner-border spinner-border-sm"></span>
+                <span *ngIf="!account.isDeleting">Delete</span>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
+<mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[1, 10, 25, 50]">
+</mat-paginator>
